@@ -1,0 +1,275 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, latexsym}
+\usepackage{array}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{kpfonts}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\renewcommand{\labelitemi}{$i$)}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{Elena Chaves Hernandez}
+\title{Proyecto DDSI GII-FEETCE 19/20}
+
+
+\begin{document}
+\renewcommand{\contentsname}{Contenidos}
+\renewcommand{\refname}{Bibliografía}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\setlength{\unitlength}{1cm}
+\vspace*{\fill}
+
+\begin{center}
+\textbf{{\Huge San Amaro y su flora}}\\\vspace{7.5cm}
+{\Large Diseño y Desarrollo de Sistemas de Información}\\\vspace{1cm}
+{\Large Elena Chaves Hernández}\\\vspace{1cm}
+\today \vspace{1cm}
+
+\begin{figure} [h!]
+\centering{\includegraphics[width=6cm]{ugr} \hspace{2.5cm} \includegraphics[width=3cm]{FEETCE}}
+\end{figure}
+\end{center}
+\end{titlepage}
+
+
+\newpage
+\tableofcontents
+\thispagestyle{empty} 
+\newpage
+
+\section{\textbf{Descripción del problema}}  
+
+Vamos a crear un sistema de información gestionado por un único administrador que será el encargado de realizar las tareas de añadir, editar y eliminar \textit{"fichas"} correspondientes a una especie vegetal concreta que podamos encontrar en el Parque de San amaro de Ceuta. En estas fichas se almacenarán, a parte de imágenes, algunos datos  del encuadre taxonómico de la especie: clase, subclase, orden, familia, género, especie y subespecie.  En relación a las características, se tendrán en cuenta cuál es el tipo de planta (árbol, arbusto...), el tamaño que adquieren en la edad adulta,  la forma de las hojas, características del fruto (carnoso, con semillas...), características de las flores (número de pétalos, disposición de estas...), etc.; con respecto a su ciclo reproductivo se almacenarán la floración, maduración y multiplicación. El objetivo del sistema es ofrecer al usuario una base de datos específica en la que se pueda acotar o saber qué especie es la que se está observando a través de las características físicas que presenta o para ver cuáles presentan unas características concretas. El método de búsqueda se realizará a partir de una característica elegida de un desplegable, mostrando otro desplegable con las encontradas en las bases de datos y a partir de estas saber la cantidad de especies disponibles en el parque, pudiendo añadir características cada vez que se elija una con las concordancias disponibles, por eso nuestro sistema debería indexar las especies teniendo en cuentas las características X, para agilizar la búsqueda en tiempo real, así, al llegar al número aproximado de especies, mostrar los enlaces a las fichas con la búsqueda de usuario. Estas fichas se identificarán por un número aleatorio generado por el sistema.
+
+\section{\textbf{Requisitos del sistema}}
+
+En este apartado se describirán los requisitos del sistema, que dividiremos en cuatro grupos (Datos, funcionales, no funcionales y restricciones semánticas) teniendo en cuenta nuestros principales objetivos:
+
+\begin{enumerate}
+\item Acceder a fichas técnicas a través del nombre o los datos que contiene.
+\item Mantener una base de datos del parque lo más accesible posible, tanto para gente experimentada como no.
+\end{enumerate}
+
+\subsection{\textbf{Requisitos de datos}}
+
+Se listan los datos necesarios a almacenar para cada especie vegetal coincidiendo con los datos de salida.
+\newline
+\begin{enumerate}[label={RD\arabic*.} ,leftmargin=2.8\parindent]
+ 
+ 	\item Datos contenidos en la ficha:
+	\begin{enumerate}[label={RD1.\arabic*.}]
+	
+	\item 
+		\textbf{Taxonomía:} \textit{clasificación científica de la especie.}
+	\begin{enumerate}[label=-]
+		\item Clase (cadena de hasta 15 caracteres)
+		\item Subclase (cadena de hasta 15 caracteres)
+		\item Orden (cadena de hasta 15 caracteres)
+		\item Familia (cadena de hasta 15 caracteres)
+		\item Género (cadena de hasta 15 caracteres)
+		\item Especie (cadena de hasta 15 caracteres)
+	\end{enumerate}
+	\medskip
+	
+	\item 
+		\textbf{Tipo:} \textit{forma de la planta.} (cadena de 18 caracteres)
+
+	\medskip
+	\item
+		\textbf{Hoja:}
+	\begin{enumerate}[label=-]
+		\item Forma (cadena de 12 caracteres)
+		\item Color (cadena de 24 caracteres)
+		\item Persistencia: \textit{perenne o caduca.} (cadena de 8 caracteres)
+	\end{enumerate}
+
+	\medskip	
+	\item
+		\textbf{Fruto:} \textit{tipo de fruto.} (cadena de 20 caracteres)
+
+	\medskip
+	\item
+		\textbf{Flor:}
+	\begin{enumerate} [label=-]
+		\item Color (cadena de 24 caracteres)
+		\item Forma (cadena de 16 caracteres)
+		\item Disposición: \textit{agrupado o solitario.} (cadena de 10 caracteres)
+		\item Número de pétalos (número entero de 2 dígitos)
+	\end{enumerate}
+
+	\medskip
+	\item
+		\textbf{Tamaño:} \textit{tamaño aproximado en la edad adulta.}
+	\begin{enumerate}[label=-]
+		\item Altura (númerico float, 6 dígitos, 3 decimales, en cm)
+	\end{enumerate}
+	
+	\medskip	
+	\item
+		\textbf{Imagen:} \textit{imagen de la especie en formato PNG.}
+
+	\medskip 
+	\item
+		\textbf{Origen:} \textit{lugar de procedencia.} (cadena de 10 caracteres)
+		
+	\medskip 
+	\item
+		\textbf{Ciclo reproductivo:}
+	\begin{enumerate} [label=-]
+		\item Floración (tipo date con mes inicial y final)
+		\item Maduración (tipo date con mes inicial y final)
+		\item Multiplicación (tipo date con mes inicial y final)
+	\end{enumerate}
+						
+\end{enumerate}
+\end{enumerate}
+
+\subsection{\textbf{Requisitos funcionales}}
+
+Se definen las características del sistema necesarias para realizar las funciones de usuario, en este caso únicamente tenemos al administrador y los usuarios que acceden a los datos.
+
+\bigskip
+
+\begin{enumerate}[label=RF\arabic*. ,leftmargin=2.8\parindent]
+	\item \underline{Crear ficha}
+	 \newline 
+	 \newline
+	El sistema debe poder crear una ficha nueva en el sistema.
+	\begin{enumerate}[label=-]
+	
+		\item El sistema nos permitirá crear una ficha nueva con todos los datos relativos a la ficha, pudiendo tener valores por defecto en datos no pertenecientes a RD1.1.
+		\item La ficha ha de contener los datos RD1.1 de manera obligatoria en las que género-especie no puede coincidir con una ficha ya en la base de datos, dato que será la clave primaria e identificación de cada especie.
+		
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Editar ficha}
+	\newline \newline
+	Se debe permitir la edición de una ficha ya creada.
+	\begin{enumerate}[label=-]
+		\item Se podrán editar los datos referentes a una ficha, excepto los RD1.1.
+		\item Para que la edición se haga efectiva se han de guardar los cambios realizados.
+		\item Una vez la ficha ha sido editada no se pueden revertir los cambios realizados.
+
+		
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Baja de ficha}
+	\newline \newline
+	Para la baja de una ficha:
+	\begin{enumerate}[label=-]
+		\item Se puede dar de baja una ficha en cualquier momento.
+		\item Se ocultará la ficha dada de baja en una \textit{"papelera"} durante 7 días.
+		\item La ficha puede ser enviada a la papelera desde una opción disponible en esta, únicamente disponible para usuarios del sistema.
+		\item Una vez la ficha esté en la papelera durante un período de 7 días se eliminará definitivamente.
+		\item No se podrá crear una nueva ficha con la misma combinación de datos RD1.1 hasta que la ficha no haya sido eliminada completamente del sistema.
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Eliminación de ficha}
+	\newline \newline
+	El sistema permite eliminar una ficha.
+	\begin{enumerate}[label=-]
+		\item Existirá la opción de la eliminación instantánea de una ficha, perdiendo ésta la opción de recuperación.
+		\item Si se desea eliminar una ficha dada de baja, se podrá hacer desde la papelera.
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Recuperación de ficha}
+	\newline \newline
+	Para la recuperación de fichas:
+	\begin{enumerate}[label=-]
+	\item La ficha ha de estar en la \textit{"papelera"}.
+	\item Al recuperar la ficha, ésta vuelve al sistema con un nuevo número de identificación.
+	\item No se podrá editar una ficha mientras se encuentre en la \textit{"papelera"}.
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Administración de datos}
+	\newline \newline
+	El sistema contará con un adminstrador de datos.
+	\begin{enumerate}[label=-]
+		\item Deberá iniciar sesión con usuario y contraseña.
+		\item La contraseña será recuperable únicamente por correo electrónico de verificación.
+		\item No se pueden crear nuevos usuarios en el sistema.
+		
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Inicio de sesión}
+	\newline \newline
+	El inicio de sesión permitirá:
+	\begin{enumerate}[label=-]
+		\item Iniciar sesión con usuario administrador desde cualquier navegador web.
+		\item Se deberá utilizar la contraseña única.
+		\item Una vez se intenta acceder de manera errónea 5 veces, se bloqueará el acceso durante 5 minutos para la dirección desde la que se acceda.
+	\end{enumerate}
+
+
+	\bigskip
+	\item \underline{Cierre de sesión}
+	\newline \newline
+	El inicio de sesión permitirá:
+	\begin{enumerate}[label=-]
+		\item Se permitirá el cierre de sesión desde la página.
+		\item Se cerrará la sesión automáticamente cuando ocurra una pérdida de conexión.
+	\end{enumerate}
+
+	\bigskip
+	\item \underline{Búsqueda en el sistema}
+	\newline \newline
+	El sistema debe permitir que cualquier usuario acceda a una búsqueda detallada sobre los datos almacenados.
+	\begin{enumerate}[label=-]
+		\item La búsqueda se podrá realizar a partir de un único dato.
+		\item Cada vez que se añade un dato a la búsqueda, el sistema mostrará el número de coincidencias.
+		\item Las fichas que coincidan se mostrarán por el par género-especie y su fotografía.
+		\item Se accederá a una ficha concreta clicando sobre la previsualización de ésta.
+		\item Sólo se mostrará una ficha completa por pantalla, pudiendo navegar a la siguiente a través de flechas dispuestas en los laterales.
+		\item Los resultados se mostrarán or orden alfabético.
+
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{\textbf{Requisitos no funcionales}}
+
+Se detallan a continuación los requisitos no funcionales del sistema.
+\newline
+
+\begin{enumerate}[label=RNF\arabic*. ,leftmargin=3.2\parindent]
+	
+	\item Rendimiento:
+		\begin{enumerate}[label=-]
+			\item Se limitará el número de imágenes contenidas en cada ficha a 3.
+			\item Se crearán índices de búsqueda para agilizar el número de casos antes de mostrar la previsualización en la búsqueda.
+		    
+		\end{enumerate}
+		
+	\item Interfaz:
+		\begin{enumerate}[label=-]
+			\item El usuario final se comunicará con el sistema vía web.
+			\item El sistema se comunicará con la base de datos contenedora de la información almacenada.
+		\end{enumerate}
+	
+\end{enumerate}
+
+\subsection{\textbf{Restricciones semánticas}}
+
+Se exponen las restricciones semánticas sobre el sistema:
+\newline
+
+\begin{enumerate}[label=RS\arabic*. ,leftmargin=2.8\parindent]
+	
+	\item El par género-especie es único para cada ficha.
+	\item Los las fichas pueden ser creadas/editadas/eliminadas por un único administrador.
+	\item El tamaño máximo de una imagen será de 250KB
+	
+\end{enumerate}
+
+\end{document}
